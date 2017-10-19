@@ -4,9 +4,9 @@ List of tasks to complete:
 
 Pt. 1:  
 insert nodes at the front  - DONE  
-insert nodes in order - IN PROGRESS  
+insert nodes in order - DONE
 print the entire list - DONE  
-find and return a pointer to a node based on artist and song name  
+find and return a pointer to a node based on artist and song name - DONE  
 find and return a pointer to the first song of an artist based on artist name  
 Return a pointer to random element in the list.  
 remove a single specified node from the list  

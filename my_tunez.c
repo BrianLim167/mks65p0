@@ -117,26 +117,44 @@ void print_list(struct song_node * start) {
   printf("\n");
 }
 
+struct song_node * find_song_with_name(struct song_node * list, char * name, char * artist) {
+  while (list && (strcmp(list->name, name) != 0) && (strcmp(list->artist, artist) != 0)) {
+    list = list->next;
+  }
+  //printf("Good news everyone! %s - %s has been found!\n", list->name, list->artist);
+  return list;
+}
+
 int main(){
   //struct song_node * table[26];
-  struct song_node * starting;
-  starting = NULL;
-  starting = insert_front(starting, "slow dancing in a burning room","john mayer");
-  printf("Printing list 1\n");
-  print_list(starting);
-  starting = insert_front(starting, "don't stop believing","journey");
-  printf("Printing list 2 \n");
-  print_list(starting);
-  //printf("%d\n",strcmp("slow dancing in a burning room", "don't stop believing"));
-  starting = insert_in_order(starting, "burning up","jonas brothers");
-  printf("Printing list 3\n");
-  print_list(starting);
+	struct song_node * starting;
+	starting = NULL;
+  struct song_node * search;
+	search = NULL;
+	starting = insert_front(starting, "slow dancing in a burning room","john mayer");
+	//printf("Printing list 1\n");
+	//print_list(starting);
+	starting = insert_front(starting, "don't stop believing","journey");
+	//printf("Printing list 2 \n");
+	//print_list(starting);
 
   printf("\nFinding \"don't stop believing - journey\"\n");
   print_list(find_song(starting,"don't stop believing","journey"));
 
   printf("Finding \"journey\"\n");
   print_list(find_artist(starting,"journey"));
+
+  printf("\n");
+
+	printf("%d\n",strcmp("don't stop believing", "burning up"));
+	starting = insert_in_order(starting, "burning up","jonas brothers");
+	printf("Printing list 3\n");
+	print_list(starting);
+  starting = insert_in_order(starting, "in your atmosphere","john mayer");
+	printf("Printing list 4\n");
+	print_list(starting);
+  search = find_song_with_name(starting, "in your atmosphere", "john mayer");
+  printf("Yay, you found the song you were looking for: %s - %s\n", search->name, search->artist);
 
   free_list(starting);
 
