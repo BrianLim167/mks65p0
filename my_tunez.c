@@ -25,26 +25,39 @@ struct song_node * insert_front(struct song_node * list, char * name, char * art
 }
 
 // insert node in alphabetical order (based on song, then artist)
-// note: a < b
-void insert_in_order(struct song_node * list, char * name, char * artist) {
+// note: a < b, strcmp(str1, str2) --> str1 - str2
+// list-> name = don't stop believing
+// new->name = burning up
+struct song_node * insert_in_order(struct song_node * list, char * name, char * artist) {
 	struct song_node * new = (struct song_node *)malloc(sizeof(struct song_node));
 	new = new_song(name, artist);
-	while (list) {
-		print_list(list);
-		// if name of current song is < name of new song
-		if (strcmp(list->name, new->name) > 0) {
-			//printf("list name: %s\n", list->name);
-			new->next = list;
-		} else if (strcmp(list->name, new->name) < 0) {
-			//printf("list name: %s, song to be added name: %s\n", list->name, new->name);
-			printf("ho");
-			struct song_node * temp;
-			temp = list->next;
-			list->next = new;
-			new->next = temp;
-		}
-		list = list->next;
+  int inserted_in_front = 0;
+	if (strcmp(list->name, new->name) > 0) {
+		//printf("hi!");
+		new->next = list;
+    inserted_in_front = 1;
 	}
+  //else if (strcmp(list->name, new->name) < 0) {
+	else {
+    struct song_node * before;
+    before = list;
+    struct song_node * after;
+    after = list->next;
+    while (after->next != NULL && strcmp(before->name, new->name) < 0) {
+      //printf("Curr: %s, Prev: %s, Next: %s\n", new->name, before->name, after->name);
+      before = after;
+      after = after->next;
+      //printf("After!: %s\n", after->name);
+    }
+    before->next = new;
+    new->next = after;
+    //printf("2Curr: %s, Prev: %s, Next: %s\n", new->name, before->name, after->name);
+	}
+  if (inserted_in_front == 1) {
+    return new;
+  } else {
+    return list;
+  }
 }
 
 /* void song_to_string(struct song_node * song){
@@ -60,20 +73,35 @@ void print_list(struct song_node * start) {
 	printf("\n");
 }
 
+struct song_node * find_song_with_name(struct song_node * list, char * name, char * artist) {
+  while (list && (strcmp(list->name, name) != 0) && (strcmp(list->artist, artist) != 0)) {
+    list = list->next;
+  }
+  //printf("Good news everyone! %s - %s has been found!\n", list->name, list->artist);
+  return list;
+}
+
 int main(){
   //struct song_node * table[26];
 	struct song_node * starting;
 	starting = NULL;
+  struct song_node * search;
+	search = NULL;
 	starting = insert_front(starting, "slow dancing in a burning room","john mayer");
-	printf("Printing list 1\n");
-	print_list(starting);
+	//printf("Printing list 1\n");
+	//print_list(starting);
 	starting = insert_front(starting, "don't stop believing","journey");
-	printf("Printing list 2 \n");
-	print_list(starting);
-	//printf("%d\n",strcmp("slow dancing in a burning room", "don't stop believing"));
-	insert_in_order(starting, "burning up","jonas brothers");
+	//printf("Printing list 2 \n");
+	//print_list(starting);
+	printf("%d\n",strcmp("don't stop believing", "burning up"));
+	starting = insert_in_order(starting, "burning up","jonas brothers");
 	printf("Printing list 3\n");
 	print_list(starting);
+  starting = insert_in_order(starting, "in your atmosphere","john mayer");
+	printf("Printing list 4\n");
+	print_list(starting);
+  search = find_song_with_name(starting, "in your atmosphere", "john mayer");
+  printf("Yay, you found the song you were looking for: %s - %s\n", search->name, search->artist);
 
   return 0;
 }

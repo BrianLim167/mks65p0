@@ -15,6 +15,8 @@ void print_song(struct song_node * song);
 
 void print_list(struct song_node * start);
 
-void insert_in_order(struct song_node * list, char * name, char * artist);
+struct song_node * insert_in_order(struct song_node * list, char * name, char * artist);
+
+struct song_node * find_song_with_name(struct song_node * list, char * name, char * artist)
 
 int main();
