@@ -4,29 +4,30 @@
 #include <ctype.h>
 #include "my_tunez.h"
 
-/* void add_to_table(struct song_node * table,
+/*
+void add_to_table(struct song_node * table,
 struct song_node * song){
 //insert_front( table[ (song->name)[0] - 'a' ], song );
-} */
+}
 
 void make_lower(char * str){
-  return; // FIX ME ! FIX ME ! FIX ME ! FIX ME ! FIX ME ! FIX ME !
-/*
-  char ans[strlen(str)+1];
-  int i=0;
-  while (str[i]){
-    ans[i] = tolower(str[i]);
-    i++;
-  }
-  strcpy(str,ans);
-  ans[strlen(str)] = 0;*/
+return; // FIX ME ! FIX ME ! FIX ME ! FIX ME ! FIX ME ! FIX ME !
+char ans[strlen(str)+1];
+int i=0;
+while (str[i]){
+ans[i] = tolower(str[i]);
+i++;
 }
+strcpy(str,ans);
+ans[strlen(str)] = 0;
+}
+*/
 
 // insert new song - helper function for inserting node at front/in order
 struct song_node * new_song(char * name, char * artist){
   struct song_node * new = (struct song_node *) malloc( sizeof(struct song_node) );
-  make_lower(name);
-  make_lower(artist);
+  //make_lower(name);
+  //make_lower(artist);
   strcpy(new->name, name);
   strcpy(new->artist, artist);
   new->next = NULL;
@@ -127,16 +128,16 @@ struct song_node * find_song_with_name(struct song_node * list, char * name, cha
 
 int main(){
   //struct song_node * table[26];
-	struct song_node * starting;
-	starting = NULL;
+  struct song_node * starting;
+  starting = NULL;
   struct song_node * search;
-	search = NULL;
-	starting = insert_front(starting, "slow dancing in a burning room","john mayer");
-	//printf("Printing list 1\n");
-	//print_list(starting);
-	starting = insert_front(starting, "don't stop believing","journey");
-	//printf("Printing list 2 \n");
-	//print_list(starting);
+  search = NULL;
+  starting = insert_front(starting, "slow dancing in a burning room","john mayer");
+  //printf("Printing list 1\n");
+  //print_list(starting);
+  starting = insert_front(starting, "don't stop believing","journey");
+  //printf("Printing list 2 \n");
+  //print_list(starting);
 
   printf("\nFinding \"don't stop believing - journey\"\n");
   print_list(find_song(starting,"don't stop believing","journey"));
@@ -146,13 +147,13 @@ int main(){
 
   printf("\n");
 
-	printf("%d\n",strcmp("don't stop believing", "burning up"));
-	starting = insert_in_order(starting, "burning up","jonas brothers");
-	printf("Printing list 3\n");
-	print_list(starting);
+  printf("%d\n",strcmp("don't stop believing", "burning up"));
+  starting = insert_in_order(starting, "burning up","jonas brothers");
+  printf("Printing list 3\n");
+  print_list(starting);
   starting = insert_in_order(starting, "in your atmosphere","john mayer");
-	printf("Printing list 4\n");
-	print_list(starting);
+  printf("Printing list 4\n");
+  print_list(starting);
   search = find_song_with_name(starting, "in your atmosphere", "john mayer");
   printf("Yay, you found the song you were looking for: %s - %s\n", search->name, search->artist);
 
