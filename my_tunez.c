@@ -1,25 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
 #include "my_tunez.h"
 
 /*
 void add_to_table(struct song_node * table,
 struct song_node * song){
 //insert_front( table[ (song->name)[0] - 'a' ], song );
-}
-
-void make_lower(char * str){
-return; // FIX ME ! FIX ME ! FIX ME ! FIX ME ! FIX ME ! FIX ME !
-char ans[strlen(str)+1];
-int i=0;
-while (str[i]){
-ans[i] = tolower(str[i]);
-i++;
-}
-strcpy(str,ans);
-ans[strlen(str)] = 0;
 }
 */
 
@@ -51,9 +38,9 @@ struct song_node * insert_in_order(struct song_node * list, char * name, char * 
 
   while (list) {
     print_list(list);
-    // if name of current song is > name of new song, new song belongs right before
+    // if name of current artist is > name of new artist, new song belongs right before
     // current song
-    if (strcmp(list->name, new->name) > 0) {
+    if (strcmp(list->artist, new->artist) > 0) {
       //printf("list name: %s\n", list->name);
       new->next = list;
       if (prev) {
@@ -92,6 +79,19 @@ struct song_node * find_artist(struct song_node * list, char * artist) {
     list = list->next;
   }
   return NULL;
+}
+
+int length(struct song_node * list){
+  int len = 0;
+  while (list){
+    len++;
+    list = list->next;
+  }
+  return len;
+}
+
+struct song_node * random_song(struct song_node * list){
+  //int i =
 }
 
 /* void song_to_string(struct song_node * song){
