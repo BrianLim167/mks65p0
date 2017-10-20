@@ -158,6 +158,7 @@ struct song_node * find_song_with_name(struct song_node * list, char * artist, c
 
 void add(struct song_node ** table, char * artist, char * name){
   table[ (artist)[0] - 'a' ] = insert_in_order( table[ (artist)[0] - 'a' ] , artist, name );
+  
 }
 
 
