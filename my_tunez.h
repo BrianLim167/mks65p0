@@ -30,4 +30,6 @@ void print_song(struct song_node * song);
 
 void print_list(struct song_node * start);
 
+void remove_song(struct song_node * list, char * name, char * artist);
+
 int main();
