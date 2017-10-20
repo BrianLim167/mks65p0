@@ -29,10 +29,15 @@ struct song_node * insert_front(struct song_node * list, char * artist, char * n
 // insert node in alphabetical order (based on song, then artist)
 // note: a < b
 struct song_node * insert_in_order(struct song_node * list, char * artist, char * name) {
+
   struct song_node * front = list;
 
   struct song_node * new = new_song(artist, name);
   struct song_node * prev = NULL;
+
+  if (!list) {
+    return new;
+  }
 
   while (list) {
     print_list(list);
@@ -158,8 +163,12 @@ struct song_node * find_song_with_name(struct song_node * list, char * artist, c
 
 void add(struct song_node ** table, char * artist, char * name){
   table[ (artist)[0] - 'a' ] = insert_in_order( table[ (artist)[0] - 'a' ] , artist, name );
+
 }
 
+void mod(char * test){
+  test[0] = 'a';
+}
 
 ///////////////////////////////////////
 // MAIN
@@ -252,9 +261,9 @@ int main(){
   for (i=0 ; i<26 ; i++){
     printf("%u - ",table[i]);
   }
+  printf("\n" );
 
   print_list(table[0]);
-
 
 
   return 0;
