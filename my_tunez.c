@@ -166,8 +166,11 @@ void add(struct song_node ** table, char * artist, char * name){
 
 }
 
-void mod(char * test){
-  test[0] = 'a';
+void print(struct song_node ** table){
+  int i;
+  for (i=0 ; i<26 ; i++){
+    print_list(table[i]);
+  }
 }
 
 ///////////////////////////////////////
@@ -253,17 +256,17 @@ int main(){
   }
 
   for (i=0 ; i<sizeof(many_songs)/sizeof(struct song_node) ; i++){
-    //add(table, many_songs[i]->artist, many_songs[i]->name);
+    add(table, many_songs[i]->artist, many_songs[i]->name);
   }
 
-  add(table, "abc", "def");
+  //add(table, "abc", "def");
 
   for (i=0 ; i<26 ; i++){
-    printf("%u - ",table[i]);
+    //printf("%u - ",table[i]);
   }
   printf("\n" );
 
-  print_list(table[0]);
+  print_table(table);
 
 
   return 0;
