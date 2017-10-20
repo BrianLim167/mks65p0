@@ -40,7 +40,7 @@ struct song_node * insert_in_order(struct song_node * list, char * artist, char 
   }
 
   while (list) {
-    print_list(list);
+    //print_list(list);
     // if name of current artist is > name of new artist, new song belongs right before
     // current song
     if ( ( strcmp(list->artist, new->artist) > 0 ) ||
@@ -255,18 +255,19 @@ int main(){
     table[i] = NULL;
   }
 
-  for (i=0 ; i<sizeof(many_songs)/sizeof(struct song_node) ; i++){
+  //for (i=0 ; i<sizeof(many_songs)/sizeof(many_songs[0]) ; i++){
+  for (i=0 ; i<5 ; i++){
     add(table, many_songs[i]->artist, many_songs[i]->name);
   }
 
   //add(table, "abc", "def");
 
-  for (i=0 ; i<26 ; i++){
+  //for (i=0 ; i<26 ; i++){
     //printf("%u - ",table[i]);
-  }
-  printf("\n" );
+  //}
+  //printf("\n" );
 
-  print_table(table);
+  print(table);
 
 
   return 0;
