@@ -118,7 +118,7 @@ struct song_node * free_list(struct song_node * node){
 
 void print_song(struct song_node * song ) {
   if (song){
-    printf("%s - %s ||| ", song->name, song->artist);
+    printf("%s - %s ||| ", song->artist, song->name);
   } else {
     printf("NULL ||| ");
   }
