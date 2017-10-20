@@ -136,24 +136,35 @@ void print_list(struct song_node * start) {
   printf("\n");
 }
 
-void remove_song(struct song_node * list, char * artist, char * name) {
+struct song_node * remove_song(struct song_node * list, char * artist, char * name) {
   struct song_node * to_be_removed = new_song(artist, name);
+  struct song_node * front = list;
   if (length(list) > 1) {
+    if ((strcmp(to_be_removed->artist, list->artist) == 0) && (strcmp(to_be_removed->name, list->name)==0)) {
+      struct song_node * temp = list->next;
+      free(list);
+      return temp;
+    }
     while (list->next) {
       if ((strcmp((list->next)->artist, to_be_removed->artist) == 0) && (strcmp((list->next)->name, to_be_removed->name) == 0)) {
         list->next = (list->next)->next;
-        return;
+        return front;
       }
-    list = list->next;
+      list = list->next;
     }
-  } else if (length(list) == 1) {
-    printf(":(\n");
-    list = NULL;
+    return list;
   }
+  else if (length(list) == 1) {
+      if ((strcmp(to_be_removed->artist, list->artist) == 0 ) && (strcmp(to_be_removed->name, list->name)==0)) {
+        list = NULL;
+      }
+      return list;
+    }
   else {
-    printf("No songs to remove!\n");
+    return NULL;
   }
 }
+
 
 /*
 struct song_node * find_song_with_name(struct song_node * list, char * artist, char * name) {
@@ -208,20 +219,8 @@ void shuffle(struct song_node ** table) {
   }
 }
 
-void delete(struct song_node ** table, char * artist, char * name) {
-  remove_song(search_artist(table, artist), artist, name);
-  print(table);
-  /*struct song_node * to_be_removed = new_song(artist, name);
-  struct song_node * list = search_artist(table, artist);
-  while (list->next) {
-    if ((strcmp((list->next)->artist, to_be_removed->artist) == 0) && (strcmp((list->next)->name, to_be_removed->name) == 0)) {
-      list->next = (list->next)->next;
-      printf("hooray!\n");
-      return;
-    }
-    list = list->next;
-  }
-  //printf("Song name: %s, Artist name: %s", list->name, list->artist); */
+void delete_song(struct song_node ** table, char * artist, char * name) {
+  table[(artist)[0] - 'a'] = remove_song(search_artist(table, artist), artist, name);
 }
 
 void print_letter(struct song_node ** table, char letter){
@@ -353,9 +352,9 @@ int main(){
   printf("~~TABLE~~\n");
   print(table);
   printf("testing delete\n");
-  delete(table,"lafa taylor","already found");
-  //printf("~~TABLE~~\n");
-  //print(table);
+  delete_song(table,"stephen walking","turtle town");
+  printf("~~TABLE~~\n");
+  print(table);
 
 
   return 0;
