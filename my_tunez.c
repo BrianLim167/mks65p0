@@ -4,12 +4,7 @@
 #include <time.h>
 #include "my_tunez.h"
 
-/*
-void add_to_table(struct song_node * table,
-struct song_node * song){
-//insert_front( table[ (song->name)[0] - 'a' ], song );
-}
-*/
+
 
 // insert new song - helper function for inserting node at front/in order
 struct song_node * new_song(char * artist, char * name){
@@ -19,6 +14,10 @@ struct song_node * new_song(char * artist, char * name){
   new->next = NULL;
   return new;
 }
+
+///////////////////////////////////////
+// SONG LIST FUNCTIONS
+///////////////////////////////////////
 
 // insert node at front
 struct song_node * insert_front(struct song_node * list, char * artist, char * name) {
@@ -141,6 +140,20 @@ struct song_node * find_song_with_name(struct song_node * list, char * artist, c
   return list;
 }
 */
+
+///////////////////////////////////////
+// SONG TABLE FUNCTIONS
+///////////////////////////////////////
+
+void add_to_table(struct song_node * table,
+  struct song_node * song){
+    //insert_front( table[ (song->name)[0] - 'a' ], song );
+  }
+
+
+///////////////////////////////////////
+// MAIN
+///////////////////////////////////////
 
 int main(){
   srand(time(NULL));
