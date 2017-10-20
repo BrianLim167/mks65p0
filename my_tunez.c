@@ -145,10 +145,10 @@ struct song_node * find_song_with_name(struct song_node * list, char * artist, c
 // SONG TABLE FUNCTIONS
 ///////////////////////////////////////
 
-void add_to_table(struct song_node * table,
-  struct song_node * song){
+//void add_to_table(struct song_node * table,
+  //struct song_node * song){
     //insert_front( table[ (song->name)[0] - 'a' ], song );
-  }
+  //}
 
 
 ///////////////////////////////////////
