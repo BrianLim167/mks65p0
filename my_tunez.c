@@ -219,16 +219,7 @@ void shuffle(struct song_node ** table) {
 }
 
 void delete_song(struct song_node ** table, char * artist, char * name) {
-  table[(artist)[0] - 'a'] = remove_song(search_artist(table, artist), artist, name);
-}
-
-void delete_all(struct song_node ** table) {
-  int i;
-  for (i = 0; i < 26; i++){
-    if (length(table[i]) > 0) {
-      remove_song(table[i]);
-    }
-  }
+  table[(artist)[0] - 'a'] = remove_song(table[(artist)[0] - 'a'], artist, name);
 }
 
 void print_letter(struct song_node ** table, char letter){
@@ -354,14 +345,14 @@ int main(){
   print_artist(table, "stephen walking");
 
 
-  printf("testing shuffle: \n");
+  printf("\ntesting shuffle: \n");
   shuffle(table);
 
-  printf("~~TABLE~~\n");
+  printf("\n~~TABLE~~\n");
   print(table);
-  printf("testing delete\n");
+  printf("\ntesting delete\n");
   delete_song(table,"the russ liquid test","1984");
-  printf("~~TABLE~~\n");
+  printf("\n~~TABLE~~\n");
   print(table);
 
 
