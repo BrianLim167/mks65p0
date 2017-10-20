@@ -131,6 +131,17 @@ void print_list(struct song_node * start) {
   printf("\n");
 }
 
+void remove_song(struct song_node * list, char * artist, char * name) {
+  struct song_node * to_be_removed = new_song(artist, name);
+  while (list->next) {
+    if ((strcmp((list->next)->artist, to_be_removed->artist) == 0) && (strcmp((list->next)->name, to_be_removed->name) == 0)) {
+      list->next = (list->next)->next;
+      return;
+    }
+    list = list->next;
+  }
+}
+
 /*
 struct song_node * find_song_with_name(struct song_node * list, char * artist, char * name) {
   while (list && (strcmp(list->name, name) != 0) && (strcmp(list->artist, artist) != 0)) {
@@ -199,7 +210,14 @@ int main(){
     printf("\n");
   }
 
-  free_list(starting);
+  printf("printing all songs\n");
+  print_list(starting);
+  remove_song(starting, "the louder the better","too strong");
+  remove_song(starting, "the russ liquid test","1984");
+  printf("printing all songs\n");
+  print_list(starting);
+
+  //free_list(starting);
 
   return 0;
 }
