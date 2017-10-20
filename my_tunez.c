@@ -40,7 +40,7 @@ struct song_node * insert_in_order(struct song_node * list, char * artist, char 
   }
 
   while (list) {
-    print_list(list);
+    //print_list(list);
     // if name of current artist is > name of new artist, new song belongs right before
     // current song
     if ( ( strcmp(list->artist, new->artist) > 0 ) ||
@@ -123,9 +123,9 @@ struct song_node * free_list(struct song_node * node){
 void print_song(struct song_node * song ) {
   if (song){
     printf("%s - %s ||| ", song->artist, song->name);
-  } else {
+  } /*else {
     printf("NULL ||| ");
-  }
+  } */
 }
 
 void print_list(struct song_node * start) {
@@ -138,12 +138,20 @@ void print_list(struct song_node * start) {
 
 void remove_song(struct song_node * list, char * artist, char * name) {
   struct song_node * to_be_removed = new_song(artist, name);
-  while (list->next) {
-    if ((strcmp((list->next)->artist, to_be_removed->artist) == 0) && (strcmp((list->next)->name, to_be_removed->name) == 0)) {
-      list->next = (list->next)->next;
-      return;
-    }
+  if (length(list) > 1) {
+    while (list->next) {
+      if ((strcmp((list->next)->artist, to_be_removed->artist) == 0) && (strcmp((list->next)->name, to_be_removed->name) == 0)) {
+        list->next = (list->next)->next;
+        return;
+      }
     list = list->next;
+    }
+  } else if (length(list) == 1) {
+    printf(":(\n");
+    list = NULL;
+  }
+  else {
+    printf("No songs to remove!\n");
   }
 }
 
@@ -163,11 +171,70 @@ struct song_node * find_song_with_name(struct song_node * list, char * artist, c
 
 void add(struct song_node ** table, char * artist, char * name){
   table[ (artist)[0] - 'a' ] = insert_in_order( table[ (artist)[0] - 'a' ] , artist, name );
-
 }
 
-void mod(char * test){
-  test[0] = 'a';
+struct song_node * search(struct song_node ** table, char * artist, char * name){
+  return find_song(table[artist[0] - 'a'], artist, name);
+}
+
+struct song_node * search_artist(struct song_node ** table, char * artist){
+  return find_artist(table[artist[0] - 'a'], artist);
+}
+
+void print(struct song_node ** table){
+  int i;
+  for (i = 0; i < 26; i++){
+    if (length(table[i]) > 0) {
+      print_list(table[i]);
+    }
+  }
+}
+
+void shuffle(struct song_node ** table) {
+  int r;
+  int counter = 0;
+  struct song_node * start;
+  start = NULL;
+  while (counter !=3){
+    r = rand() % 26;
+    //printf("value of rand: %d\n",r);
+    //printf("length of list at table[%d]: %d\n", r, length(table[r]));
+    if (length(table[r]) > 0) {
+      start = random_song(table[r]);
+      printf("%s - %s ||| \n", start->artist, start->name);
+      start = start->next;
+      counter++;
+    }
+  }
+}
+
+void delete(struct song_node ** table, char * artist, char * name) {
+  remove_song(search_artist(table, artist), artist, name);
+  print(table);
+  /*struct song_node * to_be_removed = new_song(artist, name);
+  struct song_node * list = search_artist(table, artist);
+  while (list->next) {
+    if ((strcmp((list->next)->artist, to_be_removed->artist) == 0) && (strcmp((list->next)->name, to_be_removed->name) == 0)) {
+      list->next = (list->next)->next;
+      printf("hooray!\n");
+      return;
+    }
+    list = list->next;
+  }
+  //printf("Song name: %s, Artist name: %s", list->name, list->artist); */
+}
+
+void print_letter(struct song_node ** table, char letter){
+  print_list(table[letter - 'a']);
+}
+
+void print_artist(struct song_node ** table, char * artist){
+  struct song_node * node = search_artist(table, artist);
+  while ( node && strcmp(node->artist,artist) == 0 ){
+    print_song(node);
+    node = node->next;
+  }
+  printf("\n");
 }
 
 ///////////////////////////////////////
@@ -252,18 +319,43 @@ int main(){
     table[i] = NULL;
   }
 
-  for (i=0 ; i<sizeof(many_songs)/sizeof(struct song_node) ; i++){
-    //add(table, many_songs[i]->artist, many_songs[i]->name);
+  for (i=0 ; i<sizeof(many_songs)/sizeof(many_songs[0]) ; i++){
+  //for (i=0 ; i<5 ; i++){
+    add(table, many_songs[i]->artist, many_songs[i]->name);
   }
 
-  add(table, "abc", "def");
+  //add(table, "abc", "def");
 
-  for (i=0 ; i<26 ; i++){
-    printf("%u - ",table[i]);
-  }
-  printf("\n" );
+  //for (i=0 ; i<26 ; i++){
+    //printf("%u - ",table[i]);
+  //}
+  //printf("\n" );
 
-  print_list(table[0]);
+  printf("\n~~TABLE~~\n");
+  print(table);
+
+  printf("\n~start with 't'~\n");
+  print_letter(table, 't');
+
+  printf("\n~start with 's'~\n");
+  print_letter(table, 's');
+
+  printf("\n~Artist: the louder the better~\n");
+  print_artist(table, "the louder the better");
+
+  printf("\n~Artist: stephen walking~\n");
+  print_artist(table, "stephen walking");
+
+
+  printf("testing shuffle: \n");
+  shuffle(table);
+
+  printf("~~TABLE~~\n");
+  print(table);
+  printf("testing delete\n");
+  delete(table,"lafa taylor","already found");
+  //printf("~~TABLE~~\n");
+  //print(table);
 
 
   return 0;
