@@ -182,11 +182,10 @@ struct song_node * search_artist(struct song_node ** table, char * artist){
 }
 
 void print(struct song_node ** table){
-  int i;
+  char i;
   for (i = 0; i < 26; i++){
-    if (length(table[i]) > 0) {
-      print_list(table[i]);
-    }
+    printf("%c: ",'a'+i);
+    print_list(table[i]);
   }
 }
 
@@ -353,9 +352,9 @@ int main(){
   printf("~~TABLE~~\n");
   print(table);
   printf("testing delete\n");
-  delete(table,"lafa taylor","already found");
-  //printf("~~TABLE~~\n");
-  //print(table);
+  delete(table,"the russ liquid test","1984");
+  printf("~~TABLE~~\n");
+  print(table);
 
 
   return 0;
