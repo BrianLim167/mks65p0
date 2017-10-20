@@ -163,7 +163,14 @@ struct song_node * find_song_with_name(struct song_node * list, char * artist, c
 
 void add(struct song_node ** table, char * artist, char * name){
   table[ (artist)[0] - 'a' ] = insert_in_order( table[ (artist)[0] - 'a' ] , artist, name );
+}
 
+struct song_node * search(struct song_node ** table, char * artist, char * name){
+  return find_song(table[artist[0] - 'a'], artist, name);
+}
+
+struct song_node * search_artist(struct song_node ** table, char * artist){
+  return find_artist(table[artist[0] - 'a'], artist);
 }
 
 void print(struct song_node ** table){
@@ -171,6 +178,19 @@ void print(struct song_node ** table){
   for (i=0 ; i<26 ; i++){
     print_list(table[i]);
   }
+}
+
+void print_letter(struct song_node ** table, char letter){
+  print_list(table[letter - 'a']);
+}
+
+void print_artist(struct song_node ** table, char * artist){
+  struct song_node * node = search_artist(table, artist);
+  while ( node && strcmp(node->artist,artist) == 0 ){
+    print_song(node);
+    node = node->next;
+  }
+  printf("\n");
 }
 
 ///////////////////////////////////////
@@ -255,8 +275,8 @@ int main(){
     table[i] = NULL;
   }
 
-  //for (i=0 ; i<sizeof(many_songs)/sizeof(many_songs[0]) ; i++){
-  for (i=0 ; i<5 ; i++){
+  for (i=0 ; i<sizeof(many_songs)/sizeof(many_songs[0]) ; i++){
+  //for (i=0 ; i<5 ; i++){
     add(table, many_songs[i]->artist, many_songs[i]->name);
   }
 
@@ -267,7 +287,20 @@ int main(){
   //}
   //printf("\n" );
 
+  printf("\n~~TABLE~~\n");
   print(table);
+
+  printf("\n~start with 't'~\n");
+  print_letter(table, 't');
+
+  printf("\n~start with 's'~\n");
+  print_letter(table, 's');
+
+  printf("\n~Artist: the louder the better~\n");
+  print_artist(table, "the louder the better");
+
+  printf("\n~Artist: stephen walking~\n");
+  print_artist(table, "stephen walking");
 
 
   return 0;
