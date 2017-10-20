@@ -137,17 +137,18 @@ void print_list(struct song_node * start) {
 }
 
 struct song_node * remove_song(struct song_node * list, char * artist, char * name) {
-  struct song_node * to_be_removed = new_song(artist, name);
   struct song_node * front = list;
   if (length(list) > 1) {
-    if ((strcmp(to_be_removed->artist, list->artist) == 0) && (strcmp(to_be_removed->name, list->name)==0)) {
+    if ((strcmp(artist, list->artist) == 0) && (strcmp(name, list->name)==0)) {
       struct song_node * temp = list->next;
       free(list);
       return temp;
     }
     while (list->next) {
-      if ((strcmp((list->next)->artist, to_be_removed->artist) == 0) && (strcmp((list->next)->name, to_be_removed->name) == 0)) {
+      if ((strcmp((list->next)->artist, artist) == 0) && (strcmp((list->next)->name, name) == 0)) {
+        struct song_node * temp = list->next;
         list->next = (list->next)->next;
+        free(temp);
         return front;
       }
       list = list->next;
@@ -155,8 +156,9 @@ struct song_node * remove_song(struct song_node * list, char * artist, char * na
     return list;
   }
   else if (length(list) == 1) {
-      if ((strcmp(to_be_removed->artist, list->artist) == 0 ) && (strcmp(to_be_removed->name, list->name)==0)) {
-        list = NULL;
+      if ((strcmp(artist, list->artist) == 0 ) && (strcmp(name, list->name)==0)) {
+        free(list);
+        return NULL;
       }
       return list;
     }
@@ -289,19 +291,31 @@ int main(){
   printf("printing all songs\n");
   print_list(starting);
 
-  //free_list(starting);
+  free_list(starting);
 
 
   //////////////////////////--TABLE TESTS--//////////////////////
   printf("\n------------------TABLE TESTS------------------\n\n");
 
-  struct song_node * many_songs[] = { // FREEEEE MEEEEE
+  struct song_node * many_songs[] = {
     //       artist                  name
     new_song("the louder the better","too strong"                               ),
     new_song("stephen walking",      "turtle town"                              ),
     new_song("lafa taylor",          "already found"                            ),
     new_song("stephen walking",      "the difference between us and the aliens" ),
-    new_song("the russ liquid test", "1984"                                     ),/*
+    new_song("the russ liquid test", "1984"                                     ),
+    new_song("sim gretina",          "super special samantha"                   ),
+    new_song("sim gretina",          "ichiba"                                   ),
+    new_song("shook",                "love for you"                             ),
+    new_song("stereocool",           "continuum"                                ),
+    new_song("shook",                "milestones"                               ),
+    new_song("saib",                 "spring waltz"                             ),
+    new_song("shook",                "cloud symphony"                           ),/*
+    new_song("",   ""                  ),
+    new_song("",   ""                  ),
+    new_song("",   ""                  ),
+    new_song("",   ""                  ),
+    new_song("",   ""                  ),
     new_song("",   ""                  ),
     new_song("",   ""                  ),
     new_song("",   ""                  ),
@@ -355,6 +369,11 @@ int main(){
   printf("\n~~TABLE~~\n");
   print(table);
 
+
+  for (i=0 ; i<26 ; i++){
+    //if (table[i])
+    free_list(table[i]);
+  }
 
   return 0;
 }
