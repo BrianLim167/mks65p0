@@ -219,7 +219,7 @@ void shuffle(struct song_node ** table) {
 }
 
 void delete_song(struct song_node ** table, char * artist, char * name) {
-  table[(artist)[0] - 'a'] = remove_song(search_artist(table, artist), artist, name);
+  table[(artist)[0] - 'a'] = remove_song(table[(artist)[0] - 'a'], artist, name);
 }
 
 void print_letter(struct song_node ** table, char letter){
