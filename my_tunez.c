@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "my_tunez.h"
 
 /*
@@ -13,8 +14,6 @@ struct song_node * song){
 // insert new song - helper function for inserting node at front/in order
 struct song_node * new_song(char * name, char * artist){
   struct song_node * new = (struct song_node *) malloc( sizeof(struct song_node) );
-  //make_lower(name);
-  //make_lower(artist);
   strcpy(new->name, name);
   strcpy(new->artist, artist);
   new->next = NULL;
@@ -91,7 +90,13 @@ int length(struct song_node * list){
 }
 
 struct song_node * random_song(struct song_node * list){
-  //int i =
+  int r = rand();
+  int ind = rand() % length(list);
+  int i;
+  for (i=0 ; i!=ind ; i++){
+    list = list->next;
+  }
+  return list;
 }
 
 /* void song_to_string(struct song_node * song){
@@ -110,9 +115,13 @@ struct song_node * free_list(struct song_node * node){
   return front;
 }
 
+void print_song(struct song_node * song ) {
+  printf("%s - %s | ", song->name, song->artist);
+}
+
 void print_list(struct song_node * start) {
   while (start) {
-    printf("%s - %s | ", start->name, start->artist);
+    print_song(start);
     start = start->next;
   }
   printf("\n");
@@ -127,6 +136,8 @@ struct song_node * find_song_with_name(struct song_node * list, char * name, cha
 }
 
 int main(){
+  srand(time(NULL));
+
   //struct song_node * table[26];
   struct song_node * starting;
   starting = NULL;
@@ -156,6 +167,14 @@ int main(){
   print_list(starting);
   search = find_song_with_name(starting, "in your atmosphere", "john mayer");
   printf("Yay, you found the song you were looking for: %s - %s\n", search->name, search->artist);
+
+  printf("\nSome random songs:\n");
+  int i;
+  for (i=0 ; i<3 ; i++){
+    printf("\t");
+    print_song(random_song(starting));
+    printf("\n");
+  }
 
   free_list(starting);
 
