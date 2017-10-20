@@ -145,10 +145,9 @@ struct song_node * find_song_with_name(struct song_node * list, char * artist, c
 // SONG TABLE FUNCTIONS
 ///////////////////////////////////////
 
-//void add_to_table(struct song_node * table,
-  //struct song_node * song){
-    //insert_front( table[ (song->name)[0] - 'a' ], song );
-  //}
+void add(struct song_node ** table, char * artist, char * name){
+  table[ (artist)[0] - 'a' ] = insert_in_order( table[ (artist)[0] - 'a' ] , artist, name );
+}
 
 
 ///////////////////////////////////////
@@ -158,7 +157,6 @@ struct song_node * find_song_with_name(struct song_node * list, char * artist, c
 int main(){
   srand(time(NULL));
 
-  //struct song_node * table[26];
   struct song_node * starting;
   starting = NULL;
   struct song_node * search;
@@ -200,6 +198,46 @@ int main(){
   }
 
   free_list(starting);
+
+
+  //////////////////////////--TABLE TESTS--//////////////////////
+  printf("\n------------------TABLE TESTS------------------\n\n");
+
+  struct song_node * many_songs[] = { // FREEEEE MEEEEE
+    //       artist                  name
+    new_song("the louder the better","too strong"                               ),
+    new_song("stephen walking",      "turtle town"                              ),
+    new_song("lafa taylor",          "already found"                            ),
+    new_song("stephen walking",      "the difference between us and the aliens" ),
+    new_song("the russ liquid test", "1984"                                     ),/*
+    new_song("",   ""                  ),
+    new_song("",   ""                  ),
+    new_song("",   ""                  ),
+    new_song("",   ""                  ),
+    new_song("",   ""                  ),
+    new_song("",   ""                  ),*/
+
+  };
+
+  struct song_node * table[26];
+
+  for (i=0 ; i<26 ; i++){
+    table[i] = NULL;
+  }
+
+  for (i=0 ; i<sizeof(many_songs)/sizeof(struct song_node) ; i++){
+    //add(table, many_songs[i]->artist, many_songs[i]->name);
+  }
+
+  add(table, "abc", "def");
+
+  for (i=0 ; i<26 ; i++){
+    printf("%u - ",table[i]);
+  }
+
+  print_list(table[0]);
+
+
 
   return 0;
 }
