@@ -345,14 +345,14 @@ int main(){
   print_artist(table, "stephen walking");
 
 
-  printf("testing shuffle: \n");
+  printf("\ntesting shuffle: \n");
   shuffle(table);
 
-  printf("~~TABLE~~\n");
+  printf("\n~~TABLE~~\n");
   print(table);
-  printf("testing delete\n");
+  printf("\ntesting delete\n");
   delete_song(table,"the russ liquid test","1984");
-  printf("~~TABLE~~\n");
+  printf("\n~~TABLE~~\n");
   print(table);
 
 
