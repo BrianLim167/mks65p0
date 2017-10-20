@@ -223,6 +223,15 @@ void delete_song(struct song_node ** table, char * artist, char * name) {
   table[(artist)[0] - 'a'] = remove_song(search_artist(table, artist), artist, name);
 }
 
+void delete_all(struct song_node ** table) {
+  int i;
+  for (i = 0; i < 26; i++){
+    if (length(table[i]) > 0) {
+      remove_song(table[i]);
+    }
+  }
+}
+
 void print_letter(struct song_node ** table, char letter){
   print_list(table[letter - 'a']);
 }
