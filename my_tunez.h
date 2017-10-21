@@ -34,4 +34,6 @@ struct song_node * remove_song(struct song_node * list, char * name, char * arti
 
 void delete_song(struct song_node ** table, char * artist, char * name);
 
+void delete_all_songs(struct song_node ** table);
+
 int main();
