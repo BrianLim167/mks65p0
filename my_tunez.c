@@ -369,11 +369,18 @@ int main(){
   print(table);
 
 
+  for (i=0 ; i<sizeof(many_songs)/sizeof(many_songs[0]) ; i++){
+    //for (i=0 ; i<5 ; i++){
+    free(many_songs[i]);
+  }
   for (i=0 ; i<26 ; i++){
     //if (table[i])
-    free_list(table[i]);
-    table[i] = NULL;
+    table[i] = free_list(table[i]);
+
   }
+
+  //printf("\n\n");
+  //print(table);
 
   return 0;
 }
