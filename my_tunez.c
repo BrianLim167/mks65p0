@@ -111,9 +111,8 @@ song->name song->artist;
 
 struct song_node * free_list(struct song_node * node){
   struct song_node * front = node;
-  struct song_node * money;
   while (node){
-    money = node;
+    struct song_node * money = node;
     node = node->next;
     free(money);
   }
@@ -291,7 +290,7 @@ int main(){
   printf("printing all songs\n");
   print_list(starting);
 
-  free_list(starting);
+  starting = free_list(starting);
 
 
   //////////////////////////--TABLE TESTS--//////////////////////
@@ -373,6 +372,7 @@ int main(){
   for (i=0 ; i<26 ; i++){
     //if (table[i])
     free_list(table[i]);
+    table[i] = NULL;
   }
 
   return 0;
