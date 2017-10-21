@@ -1,11 +1,9 @@
-all: my_tunez.o
-	gcc my_tunez.o -o my_tunez
-
-my_tunez.o: my_tunez.c my_tunez.h
+all: my_tunez.c my_tunez.h main.c
 	gcc -c my_tunez.c my_tunez.h
+	gcc -o tunes main.c
 
 run: all
-	./my_tunez
+	./tunes
 
 clean:
 	rm -f *.o

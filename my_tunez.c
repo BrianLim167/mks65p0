@@ -8,7 +8,7 @@
 
 // insert new song - helper function for inserting node at front/in order
 struct song_node * new_song(char * artist, char * name){
-  struct song_node * new = (struct song_node *) malloc( sizeof(struct song_node) );
+  struct song_node * new = (struct song_node *)malloc(sizeof(struct song_node) );
   strcpy(new->name, name);
   strcpy(new->artist, artist);
   new->next = NULL;
@@ -23,6 +23,7 @@ struct song_node * new_song(char * artist, char * name){
 struct song_node * insert_front(struct song_node * list, char * artist, char * name) {
   struct song_node * new = new_song(artist, name);
   new->next = list;
+  printf("inserting in front: %s - %s:\n",new->artist,new->name);
   return new;
 }
 
@@ -34,6 +35,7 @@ struct song_node * insert_in_order(struct song_node * list, char * artist, char 
 
   struct song_node * new = new_song(artist, name);
   struct song_node * prev = NULL;
+  printf("inserting in alphabetical order: %s - %s:\n",new->artist,new->name);
 
   if (!list) {
     return new;
@@ -66,8 +68,10 @@ struct song_node * insert_in_order(struct song_node * list, char * artist, char 
 }
 
 struct song_node * find_song(struct song_node * list, char * artist, char * name) {
+  printf("Searching for %s - %s\n", artist,name);
   while (list) {
     if (!strcmp(list->name,name) && !strcmp(list->artist,artist)){
+      printf("Good news everyone! %s - %s has been found!\n",list->artist,list->name);
       return list;
     }
     list = list->next;
@@ -76,6 +80,7 @@ struct song_node * find_song(struct song_node * list, char * artist, char * name
 }
 
 struct song_node * find_artist(struct song_node * list, char * artist) {
+  printf("Searching for songs by %s\n", artist);
   while (list) {
     if (!strcmp(list->artist,artist)){
       return list;
@@ -109,12 +114,12 @@ chr ans[] =;
 song->name song->artist;
 } */
 
-struct song_node * free_list(struct song_node * node){
-  struct song_node * front = node;
-  while (node){
-    struct song_node * money = node;
-    node = node->next;
-    free(money);
+struct song_node * free_list(struct song_node * front) {
+  struct song_node * temp;
+  while (front) {
+    temp = front->next;
+    free(front);
+    front = temp;
   }
   return front;
 }
@@ -136,6 +141,7 @@ void print_list(struct song_node * start) {
 }
 
 struct song_node * remove_song(struct song_node * list, char * artist, char * name) {
+  printf("Removing %s - %s",artist,name);
   struct song_node * front = list;
   if (length(list) > 1) {
     if ((strcmp(artist, list->artist) == 0) && (strcmp(name, list->name)==0)) {
@@ -236,151 +242,11 @@ void print_artist(struct song_node ** table, char * artist){
   printf("\n");
 }
 
-///////////////////////////////////////
-// MAIN
-///////////////////////////////////////
-
-int main(){
-  srand(time(NULL));
-
-  struct song_node * starting;
-  starting = NULL;
-  struct song_node * search;
-  search = NULL;
-  starting = insert_front(starting, "the russ liquid test","1984");
-  //printf("Printing list 1\n");
-  //print_list(starting);
-  starting = insert_front(starting, "stephen walking","turtle town");
-  //printf("Printing list 2 \n");
-  //print_list(starting);
-
-  printf("\n");
-
-  //printf("%d\n",strcmp("the louder the better - too strong", ""));
-  starting = insert_in_order(starting, "the louder the better","too strong");
-  printf("Printing list 3\n");
-  print_list(starting);
-  starting = insert_in_order(starting, "stephen walking","the difference between us and the aliens");
-  printf("Printing list 4\n");
-  print_list(starting);
-  search = find_song(starting, "stephen walking", "the difference between us and the aliens");
-  printf("Yay, you found the song you were looking for:\n");
-  print_song(search);
-  printf("\n");
-
-  printf("\nFinding \"stephen walking - turtle town\"\n");
-  print_song(find_song(starting,"stephen walking","turtle town"));
-  printf("\n");
-
-  printf("Finding \"stephen walking\"\n");
-  print_list(find_artist(starting,"stephen walking"));
-
-  printf("\nSome random songs:\n");
+void delete_all_songs(struct song_node ** table) {
   int i;
-  for (i=0 ; i<3 ; i++){
-    printf("\t");
-    print_song(random_song(starting));
-    printf("\n");
-  }
-
-  printf("printing all songs\n");
-  print_list(starting);
-  remove_song(starting, "the louder the better","too strong");
-  remove_song(starting, "the russ liquid test","1984");
-  printf("printing all songs\n");
-  print_list(starting);
-
-  starting = free_list(starting);
-
-
-  //////////////////////////--TABLE TESTS--//////////////////////
-  printf("\n------------------TABLE TESTS------------------\n\n");
-
-  struct song_node * many_songs[] = {
-    //       artist                  name
-    new_song("the louder the better","too strong"                               ),
-    new_song("stephen walking",      "turtle town"                              ),
-    new_song("lafa taylor",          "already found"                            ),
-    new_song("stephen walking",      "the difference between us and the aliens" ),
-    new_song("the russ liquid test", "1984"                                     ),
-    new_song("sim gretina",          "super special samantha"                   ),
-    new_song("sim gretina",          "ichiba"                                   ),
-    new_song("shook",                "love for you"                             ),
-    new_song("stereocool",           "continuum"                                ),
-    new_song("shook",                "milestones"                               ),
-    new_song("saib",                 "spring waltz"                             ),
-    new_song("shook",                "cloud symphony"                           ),/*
-    new_song("",   ""                  ),
-    new_song("",   ""                  ),
-    new_song("",   ""                  ),
-    new_song("",   ""                  ),
-    new_song("",   ""                  ),
-    new_song("",   ""                  ),
-    new_song("",   ""                  ),
-    new_song("",   ""                  ),
-    new_song("",   ""                  ),
-    new_song("",   ""                  ),
-    new_song("",   ""                  ),*/
-
-  };
-
-  struct song_node * table[26];
-
-  for (i=0 ; i<26 ; i++){
-    table[i] = NULL;
-  }
-
-  for (i=0 ; i<sizeof(many_songs)/sizeof(many_songs[0]) ; i++){
-  //for (i=0 ; i<5 ; i++){
-    add(table, many_songs[i]->artist, many_songs[i]->name);
-  }
-
-  //add(table, "abc", "def");
-
-  //for (i=0 ; i<26 ; i++){
-    //printf("%u - ",table[i]);
-  //}
-  //printf("\n" );
-
-  printf("\n~~TABLE~~\n");
-  print(table);
-
-  printf("\n~start with 't'~\n");
-  print_letter(table, 't');
-
-  printf("\n~start with 's'~\n");
-  print_letter(table, 's');
-
-  printf("\n~Artist: the louder the better~\n");
-  print_artist(table, "the louder the better");
-
-  printf("\n~Artist: stephen walking~\n");
-  print_artist(table, "stephen walking");
-
-
-  printf("\ntesting shuffle: \n");
-  shuffle(table);
-
-  printf("\n~~TABLE~~\n");
-  print(table);
-  printf("\ntesting delete\n");
-  delete_song(table,"the russ liquid test","1984");
-  printf("\n~~TABLE~~\n");
-  print(table);
-
-
-  for (i=0 ; i<sizeof(many_songs)/sizeof(many_songs[0]) ; i++){
-    //for (i=0 ; i<5 ; i++){
-    free(many_songs[i]);
-  }
   for (i=0 ; i<26 ; i++){
     //if (table[i])
     table[i] = free_list(table[i]);
 
   }
-
-  //printf("\n\n");
-  //print(table);
-
-  return 0;
 }

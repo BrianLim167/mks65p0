@@ -43,5 +43,6 @@ void shuffle(struct song_node ** table);
 void print_letter(struct song_node ** table, char letter);
 
 void print_artist(struct song_node ** table, char * artist);
+void delete_all_songs(struct song_node ** table);
 
 int main();
