@@ -6,9 +6,6 @@ struct song_node{
 
 void make_lower(char * str);
 
-void add_to_table(struct song_node * table,
-		  struct song_node * song);
-
 struct song_node * new_song(char * name, char * artist);
 
 struct song_node * insert_front(struct song_node * list, char * name, char * artist);
@@ -33,5 +30,18 @@ void print_list(struct song_node * start);
 struct song_node * remove_song(struct song_node * list, char * name, char * artist);
 
 void delete_song(struct song_node ** table, char * artist, char * name);
+
+void add(struct song_node ** table, char * artist, char * name);
+
+struct song_node * search(struct song_node ** table, char * artist, char * name);
+struct song_node * search_artist(struct song_node ** table, char * artist);
+
+void print(struct song_node ** table);
+
+void shuffle(struct song_node ** table);
+
+void print_letter(struct song_node ** table, char letter);
+
+void print_artist(struct song_node ** table, char * artist);
 
 int main();
